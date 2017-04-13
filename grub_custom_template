@@ -1,0 +1,27 @@
+menuentry 'Arch Kernel Fun with base kernel' --class gnu-linux --class gnu --class os  {
+        load_video
+        set gfxpayload=keep
+        insmod gzio
+        insmod part_gpt
+        #if you are stupid like me and you use your EFI partition as /boot sometimes...
+        insmod fat
+        set root=$KERNEL_PART
+        echo    'Loading Linux linux ...'
+        linux   $BOOT/vmlinuz-linux root=$ROOTMOUNT rw  verbose
+        echo    'Loading initial ramdisk ...'
+        initrd  /boot/initramfs-linux.img
+}
+
+
+menuentry 'Arch Kernel Fun with developement kernel' --class gnu-linux --class gnu --class os {
+        load_video
+        set gfxpayload=keep
+        insmod gzio
+        insmod part_gpt
+        insmod fat
+        set root=$KERNEL_PART
+        echo    'Loading Linux linux ...'
+        linux   $BOOT/vmlinuz-linux-custom root=$ROOTMOUNT rw  verbose
+        echo    'Loading initial ramdisk ...'
+        initrd  /boot/initramfs-linux-custom.img
+}
